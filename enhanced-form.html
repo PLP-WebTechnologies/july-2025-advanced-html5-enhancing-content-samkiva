@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Enhanced Form — Week 2</title>
+  <meta name="description" content="Enhanced HTML5 form with lists, tables, media, semantic layout and validation.">
+  <style>
+    :root{--max-width:900px;--accent:#1e88e5;--muted:#666;}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.45;margin:0;background:#f7f9fb;color:#111}
+    .container{max-width:var(--max-width);margin:28px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 6px 22px rgba(20,30,50,0.06)}
+    header, footer{padding:12px 0}
+    header h1{margin:.2rem 0;color:var(--accent)}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+    main{min-width:0}
+    .panel{padding:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef3fb}
+    .note{color:var(--muted);font-size:0.95rem;margin-bottom:12px}
+    table{width:100%;border-collapse:collapse;margin:10px 0}
+    table th,table td{padding:8px;border:1px solid #e6eef8;text-align:left;font-size:0.95rem}
+    ul,ol{margin:6px 0 12px 20px}
+    label{display:block;margin-bottom:6px;font-weight:600}
+    .row{display:flex;gap:10px;align-items:center}
+    input,select,textarea{width:100%;padding:10px;border:1px solid #d6e3f6;border-radius:6px;background:#fff}
+    textarea{min-height:100px;resize:vertical}
+    .small{font-size:0.9rem;color:var(--muted)}
+    button{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+    fieldset{border:1px dashed #e1ecff;padding:12px;border-radius:8px;margin-bottom:12px}
+    legend{padding:0 8px;font-weight:700}
+    .media img{max-width:100%;height:auto;border-radius:8px;border:1px solid #e8f0fb}
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr;gap:12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+      <h1>Enhanced Form — Week 2</h1>
+      <p class="note">This page demonstrates semantic markup, accessible form controls, validation and media.</p>
+    </header>
+
+    <section class="grid" aria-label="content and sidebar">
+      <main>
+        <article class="panel" aria-labelledby="form-heading">
+          <h2 id="form-heading">Submit Your Profile</h2>
+          <p class="small">Complete the form below. Fields marked with <strong>*</strong> are required.</p>
+
+          <form id="profileForm" action="#" method="post" novalidate autocomplete="on" aria-describedby="form-desc">
+            <p id="form-desc" class="small">We use standard HTML5 validation. Try submitting with invalid values to see validation in action.</p>
+
+            <fieldset>
+              <legend>Personal Information</legend>
+
+              <label for="fullName">Full name *</label>
+              <input id="fullName" name="fullName" type="text" placeholder="Jane Doe" required autocomplete="name" />
+
+              <label for="email">Email address *</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+
+              <label for="phone">Phone (Kenya sample) *</label>
+              <input id="phone" name="phone" type="tel" placeholder="+254712345678"
+                     pattern="^\+?\d{9,15}$" title="Enter a valid phone number with country code (digits only)" required autocomplete="tel" />
+
+              <div class="row" style="margin-top:10px">
+                <div style="flex:1">
+                  <label for="birth">Birthday</label>
+                  <input id="birth" name="birth" type="date" max="2006-12-31" autocomplete="bday" />
+                  <p class="small">Users must be born before 2007 in this example.</p>
+                </div>
+
+                <div style="width:160px">
+                  <label for="gender">Gender</label>
+                  <select id="gender" name="gender" autocomplete="sex">
+                    <option value="">Prefer not to say</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="nonbinary">Non-binary</option>
+                  </select>
+                </div>
+              </div>
+
+            </fieldset>
+
+            <fieldset>
+              <legend>Preferences & Details</legend>
+
+              <label for="username">Username (readonly example)</label>
+              <input id="username" name="username" type="text" readonly value="HexSentiel_Student" aria-readonly="true" />
+
+              <label for="bio">Short bio</label>
+              <textarea id="bio" name="bio" placeholder="Tell us something short about yourself" maxlength="300" autocomplete="bio"></textarea>
+
+              <div class="row" style="margin-top:8px">
+                <div style="flex:1">
+                  <label for="interest">Favourite number (1–100)</label>
+                  <input id="interest" name="interest" type="number" min="1" max="100" value="7" />
+                </div>
+                <div style="width:140px">
+                  <label for="color">Theme color</label>
+                  <input id="color" name="color" type="color" value="#1e88e5" />
+                </div>
+              </div>
+
+              <label>Notifications</label>
+              <div class="small" role="group" aria-labelledby="notif-label">
+                <label><input type="checkbox" name="notify" value="email" checked /> Email</label>
+                <label style="margin-left:12px"><input type="checkbox" name="notify" value="sms" /> SMS</label>
+              </div>
+
+              <label style="margin-top:10px">Account type</label>
+              <div class="small" role="radiogroup" aria-labelledby="account-type">
+                <label><input type="radio" name="account" value="basic" checked /> Basic</label>
+                <label style="margin-left:12px"><input type="radio" name="account" value="pro" /> Pro</label>
+              </div>
+
+              <label for="avatar">Upload avatar (image files only)</label>
+              <input id="avatar" name="avatar" type="file" accept="image/*" />
+
+            </fieldset>
+
+            <fieldset>
+              <legend>Security</legend>
+              <label for="password">Password *</label>
+              <input id="password" name="password" type="password" minlength="8" required
+                     placeholder="at least 8 characters" autocomplete="new-password" />
+
+              <label for="confirm">Confirm password *</label>
+              <input id="confirm" name="confirm" type="password" minlength="8" required placeholder="repeat password" />
+              <p class="small">Note: client-side only. Server should also validate.</p>
+            </fieldset>
+
+            <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+              <button type="submit">Submit profile</button>
+              <button type="reset" style="background:#e0e6f7;color:#0b2d5a">Reset</button>
+              <p class="small" style="margin:0 0 0 12px">Press submit to see HTML5 validation popups.</p>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel" aria-labelledby="extra-heading" style="margin-top:16px">
+          <h3 id="extra-heading">Content: Lists, Table, and Media</h3>
+
+          <section>
+            <h4>Semantic Lists</h4>
+            <p class="small">Ordered list (steps) and unordered list (features):</p>
+            <ol>
+              <li>Fill your personal information</li>
+              <li>Choose preferences and upload an avatar</li>
+              <li>Submit and confirm</li>
+            </ol>
+
+            <ul>
+              <li>Accessible labels</li>
+              <li>Validation with HTML5 attributes</li>
+              <li>Responsive layout</li>
+            </ul>
+          </section>
+
+          <section style="margin-top:12px">
+            <h4>Sample Data Table</h4>
+            <table aria-describedby="table-desc">
+              <caption id="table-desc" class="small">Example: sample users and status</caption>
+              <thead>
+                <tr><th>Name</th><th>Role</th><th>Joined</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Jane Doe</td><td>Student</td><td>2023-03-12</td><td>Active</td></tr>
+                <tr><td>Samuel K.</td><td>Instructor</td><td>2021-10-01</td><td>Active</td></tr>
+                <tr><td>Alex</td><td>Alumni</td><td>2019-06-20</td><td>Inactive</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="media" style="margin-top:12px">
+            <h4>Media</h4>
+            <p class="small">Image with alt text and an embedded sample video (controls enabled):</p>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png"
+                   alt="Example transparent PNG of an icon" width="300" />
+              <figcaption class="small">Sample image from Wikimedia Commons (used for demo).</figcaption>
+            </figure>
+
+            <video controls width="300" style="margin-top:10px">
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </section>
+        </article>
+      </main>
+
+      <aside class="panel" aria-label="instructions and help">
+        <h3>Quick Validation Tips</h3>
+        <p class="small">Examples of validation used:</p>
+        <ul>
+          <li><code>required</code> for mandatory fields</li>
+          <li><code>type="email"</code>,<code>pattern</code> for phone numbers</li>
+          <li><code>min</code>/<code>max</code> for numeric ranges</li>
+          <li><code>readonly</code> shows non-editable text</li>
+        </ul>
+
+        <h4 style="margin-top:12px">Accessibility</h4>
+        <p class="small">All controls have associated labels. Fieldsets + legends group related controls logically.</p>
+
+        <h4 style="margin-top:12px">Submission</h4>
+        <p class="small">Save as <strong>enhanced-form.html</strong> and upload to your classroom repo. Ensure the file is accessible at the root of your submission.</p>
+      </aside>
+    </section>
+
+    <footer>
+      <p class="small">Created by <strong>HexSentiel (Kivairu Samuel)</strong> — Week 2 Assignment</p>
+    </footer>
+  </div>
+
+  <script>
+    // Example: client-side check for matching passwords (enhances user experience)
+    const form = document.getElementById('profileForm');
+    form.addEventListener('submit', (e) => {
+      const pw = document.getElementById('password').value;
+      const conf = document.getElementById('confirm').value;
+      if (pw !== conf) {
+        e.preventDefault();
+        alert('Passwords do not match. Please check and try again.');
+        document.getElementById('confirm').focus();
+      }
+    });
+
+    // Optional: simple enhancement to update filename if user uploads an avatar
+    const avatar = document.getElementById('avatar');
+    avatar?.addEventListener('change', () => {
+      if (avatar.files && avatar.files.length) {
+        const name = avatar.files[0].name;
+        avatar.setAttribute('aria-label', 'Selected file: ' + name);
+      }
+    });
+  </script>
+</body>
+</html>
